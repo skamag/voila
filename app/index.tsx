@@ -8,8 +8,9 @@ import {
   Alert,
   ScrollView,
 } from "react-native"
-import Voice from "@react-native-voice/voice" // Import the library
-import * as Speech from "expo-speech" // Import the text-to-speech library
+import Voice from "@react-native-voice/voice"
+// import Voice from '@react-native-voice/voice/dist/voice';
+import * as Speech from "expo-speech"
 
 const HomeScreen = () => {
   const [isRecording, setIsRecording] = useState(false)
@@ -21,15 +22,15 @@ const HomeScreen = () => {
   ])
 
   useEffect(() => {
-    Voice.onSpeechResults = onSpeechResults // Event when speech is recognized
-    Voice.onSpeechError = onSpeechError // Event when there’s an error
+    Voice.onSpeechResults = onSpeechResults
+    Voice.onSpeechError = onSpeechError
     return () => {
-      Voice.destroy().then(Voice.removeAllListeners) // Clean up listeners on unmount
+      Voice.destroy().then(Voice.removeAllListeners)
     }
   }, [])
 
   const onSpeechResults = (result: any) => {
-    setRecognizedText(result.value[0]) // Get the first recognized result
+    setRecognizedText(result.value[0])
     console.log("test")
   }
 
@@ -43,7 +44,7 @@ const HomeScreen = () => {
 
   const startRecognition = async () => {
     try {
-      // await Voice.start("en-US") // Start listening for English (US)
+      await Voice.start("en-US")
       setIsRecording(true)
     } catch (e) {
       console.error(e)
@@ -52,7 +53,7 @@ const HomeScreen = () => {
 
   const stopRecognition = async () => {
     try {
-      await Voice.stop() // Stop listening
+      await Voice.stop()
       setIsRecording(false)
 
       let newNote =
@@ -68,12 +69,11 @@ const HomeScreen = () => {
     isRecording ? stopRecognition() : startRecognition()
   }
 
-  // Function to read a note aloud using text-to-speech
   const readNoteAloud = (note: any) => {
     Speech.speak(note, {
-      language: "en-US", // Specify the language
-      pitch: 1.0, // Set the pitch
-      rate: 1.0, // Set the speaking rate
+      language: "en-US",
+      pitch: 1.0,
+      rate: 1.0,
     })
   }
 
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     borderRadius: 107,
   },
   recordingButton: {
-    backgroundColor: "red", // Change color when recording
+    backgroundColor: "red",
   },
   micImage: {
     zIndex: 100,

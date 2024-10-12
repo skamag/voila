@@ -44,7 +44,7 @@ if (getRNMinorVersion() >= 75) {
   }
 }
 
-rootProject.name = 'mailvoice'
+rootProject.name = 'mail-voice'
 
 dependencyResolutionManagement {
   versionCatalogs {
@@ -62,5 +62,6 @@ if (getRNMinorVersion() < 75) {
   applyNativeModulesSettingsGradle(settings)
 }
 
-include ':app'
+include ':@react-native-voice_voice', ':app'
+project(':@react-native-voice_voice').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-voice/voice/android')
 includeBuild(new File(["node", "--print", "require.resolve('@react-native/gradle-plugin/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim()).getParentFile())

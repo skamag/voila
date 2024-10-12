@@ -109,13 +109,13 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.mailvoice"
+    namespace 'com.magne.voila'
     defaultConfig {
-        applicationId "com.mailvoice"
+        applicationId 'com.magne.voila'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
     }
     signingConfigs {
         debug {
@@ -193,6 +193,7 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+    compile project(':@react-native-voice_voice')
 }
 
 if (rnVersion < versionToNumber(0, 75, 0)) {
