@@ -59,26 +59,34 @@ const HomeScreen = () => {
     <View style={styles.container}>
       <View style={styles.notesContainer}>
         <View style={styles.note}>
-          <TouchableOpacity style={styles.noteText}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
+          <TouchableOpacity>
+            <Text style={styles.noteText}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry.
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={styles.note}>
-          <Text style={styles.noteText}>Lorem Ipsum is simply dummy text</Text>
+          <TouchableOpacity>
+            <Text style={styles.noteText}>
+              Lorem Ipsum is simply dummy text
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.note}>
-          <Text style={styles.noteText}>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s
-          </Text>
+          <TouchableOpacity>
+            <Text style={styles.noteText}>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
       <View style={styles.buttonContainer}>
         <View>
           <Text style={styles.text}>
-            {recognizedText || "Listen to note by pressing it or..."}
+            {recognizedText || "Listen to a note by pressing it or..."}
           </Text>
           <Text
             style={[
@@ -86,7 +94,7 @@ const HomeScreen = () => {
               { color: isRecording ? "red" : "#333" },
             ]}
           >
-            {isRecording ? "Listening..." : "Tap the mic to record new note"}
+            {isRecording ? "Listening..." : "Tap the mic to record a new note"}
           </Text>
         </View>
         <TouchableOpacity
@@ -122,15 +130,17 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   note: {
-    flex: 1,
+    // flex: 1,
     width: "100%",
+    height: "auto",
     borderRadius: 10,
     backgroundColor: "#FFF6C6",
     overflow: "hidden",
   },
   noteText: {
-    margin: 25,
-    fontSize: 24,
+    marginVertical: 25,
+    marginHorizontal: 25,
+    fontSize: 16,
   },
   buttonContainer: {
     display: "flex",
@@ -152,8 +162,8 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: 200,
-    width: 200,
+    height: 160,
+    width: 160,
     backgroundColor: "grey",
     borderColor: "black",
     borderWidth: 7,
