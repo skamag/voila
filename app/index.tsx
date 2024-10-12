@@ -6,12 +6,19 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ScrollView,
 } from "react-native"
 import Voice from "@react-native-voice/voice" // Import the library
+import * as Speech from "expo-speech" // Import the text-to-speech library
 
 const HomeScreen = () => {
   const [isRecording, setIsRecording] = useState(false)
   const [recognizedText, setRecognizedText] = useState("")
+  const [notes, setNotes] = useState<String[]>([
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+    "Lorem Ipsum is simply dummy text",
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+  ])
 
   useEffect(() => {
     Voice.onSpeechResults = onSpeechResults // Event when speech is recognized
@@ -23,6 +30,7 @@ const HomeScreen = () => {
 
   const onSpeechResults = (result: any) => {
     setRecognizedText(result.value[0]) // Get the first recognized result
+    console.log("test")
   }
 
   const onSpeechError = (error: any) => {
@@ -35,7 +43,7 @@ const HomeScreen = () => {
 
   const startRecognition = async () => {
     try {
-      await Voice.start("en-US") // Start listening for English (US)
+      // await Voice.start("en-US") // Start listening for English (US)
       setIsRecording(true)
     } catch (e) {
       console.error(e)
@@ -46,6 +54,11 @@ const HomeScreen = () => {
     try {
       await Voice.stop() // Stop listening
       setIsRecording(false)
+
+      let newNote =
+        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+
+      setNotes((oldNotes) => [...oldNotes, newNote])
     } catch (e) {
       console.error(e)
     }
@@ -55,34 +68,34 @@ const HomeScreen = () => {
     isRecording ? stopRecognition() : startRecognition()
   }
 
+  // Function to read a note aloud using text-to-speech
+  const readNoteAloud = (note: any) => {
+    Speech.speak(note, {
+      language: "en-US", // Specify the language
+      pitch: 1.0, // Set the pitch
+      rate: 1.0, // Set the speaking rate
+    })
+  }
+
   return (
     <View style={styles.container}>
-      <View style={styles.notesContainer}>
-        <View style={styles.note}>
-          <TouchableOpacity>
-            <Text style={styles.noteText}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry.
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.note}>
-          <TouchableOpacity>
-            <Text style={styles.noteText}>
-              Lorem Ipsum is simply dummy text
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.note}>
-          <TouchableOpacity>
-            <Text style={styles.noteText}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <ScrollView
+        style={styles.notesContainer}
+        ref={(ref) => {
+          this.scrollView = ref
+        }}
+        onContentSizeChange={() =>
+          this.scrollView.scrollToEnd({ animated: true })
+        }
+      >
+        {notes.map((note, index) => (
+          <View style={styles.note} key={index}>
+            <TouchableOpacity onPress={() => readNoteAloud(note)}>
+              <Text style={styles.noteText}>{note}</Text>
+            </TouchableOpacity>
+          </View>
+        ))}
+      </ScrollView>
       <View style={styles.buttonContainer}>
         <View>
           <Text style={styles.text}>
@@ -127,13 +140,14 @@ const styles = StyleSheet.create({
   notesContainer: {
     flex: 1,
     width: "100%",
-    gap: 10,
+    overflow: "hidden",
   },
   note: {
     // flex: 1,
     width: "100%",
     height: "auto",
     borderRadius: 10,
+    marginBottom: 10,
     backgroundColor: "#FFF6C6",
     overflow: "hidden",
   },
