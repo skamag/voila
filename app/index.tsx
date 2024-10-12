@@ -57,26 +57,51 @@ const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        {recognizedText || "Press the mic and start speaking..."}
-      </Text>
-      <Text
-        style={[
-          styles.recordingStatus,
-          { color: isRecording ? "red" : "#333" },
-        ]}
-      >
-        {isRecording ? "Listening..." : "Tap the mic to speak"}
-      </Text>
-      <TouchableOpacity
-        style={[styles.translateButton, isRecording && styles.recordingButton]}
-        onPress={handleMicPress}
-      >
-        <Image
-          style={styles.micImage}
-          source={require("../assets/images/icons8-microphone-96.png")}
-        />
-      </TouchableOpacity>
+      <View style={styles.notesContainer}>
+        <View style={styles.note}>
+          <TouchableOpacity style={styles.noteText}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry.
+          </TouchableOpacity>
+        </View>
+        <View style={styles.note}>
+          <Text style={styles.noteText}>Lorem Ipsum is simply dummy text</Text>
+        </View>
+        <View style={styles.note}>
+          <Text style={styles.noteText}>
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s
+          </Text>
+        </View>
+      </View>
+      <View style={styles.buttonContainer}>
+        <View>
+          <Text style={styles.text}>
+            {recognizedText || "Listen to note by pressing it or..."}
+          </Text>
+          <Text
+            style={[
+              styles.recordingStatus,
+              { color: isRecording ? "red" : "#333" },
+            ]}
+          >
+            {isRecording ? "Listening..." : "Tap the mic to record new note"}
+          </Text>
+        </View>
+        <TouchableOpacity
+          style={[
+            styles.translateButton,
+            isRecording && styles.recordingButton,
+          ]}
+          onPress={handleMicPress}
+        >
+          <Image
+            style={styles.micImage}
+            source={require("../assets/images/icons8-microphone-96.png")}
+          />
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -84,9 +109,33 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: 50,
+    marginVertical: 50,
+    marginHorizontal: 25,
+    backgroundColor: "#fff",
+  },
+  notesContainer: {
+    flex: 1,
+    width: "100%",
+    gap: 10,
+  },
+  note: {
+    flex: 1,
+    width: "100%",
+    borderRadius: 10,
+    backgroundColor: "#FFF6C6",
+    overflow: "hidden",
+  },
+  noteText: {
+    margin: 25,
+    fontSize: 24,
+  },
+  buttonContainer: {
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
   },
   text: {
     fontSize: 18,
@@ -97,8 +146,10 @@ const styles = StyleSheet.create({
   recordingStatus: {
     fontSize: 16,
     marginBottom: 20,
+    textAlign: "center",
   },
   translateButton: {
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
     height: 200,
@@ -112,7 +163,7 @@ const styles = StyleSheet.create({
     backgroundColor: "red", // Change color when recording
   },
   micImage: {
-    position: "absolute",
+    zIndex: 100,
   },
 })
 
