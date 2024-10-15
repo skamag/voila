@@ -20,7 +20,9 @@
     "@react-native-voice/voice": "^3.2.4",
     "@react-navigation/native": "^6.0.2",
     "@wdragon/react-native-voice": "^3.3.11",
+    "axios": "^1.7.7",
     "expo": "~51.0.28",
+    "expo-av": "~14.0.7",
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.10",
     "expo-linking": "~6.3.1",
@@ -40,7 +42,8 @@
     "react-native-voice": "^0.3.0",
     "react-native-web": "~0.19.10",
     "react-native-webview": "13.8.6",
-    "react-navigation": "^5.0.0"
+    "react-navigation": "^5.0.0",
+    "whisper.rn": "^0.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",

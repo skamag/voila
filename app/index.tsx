@@ -14,7 +14,7 @@ import * as Speech from "expo-speech"
 const HomeScreen = () => {
   const [isRecording, setIsRecording] = useState(false)
   const [modalVisible, setModalVisible] = useState(false)
-  const [recognizedText, setRecognizedText] = useState("Test")
+  const [recognizedText, setRecognizedText] = useState("")
   const [notes, setNotes] = useState<String[]>([
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
     "Lorem Ipsum is simply dummy text",
@@ -56,52 +56,35 @@ const HomeScreen = () => {
 
   const startRecognition = async () => {
     try {
-      if (isRecording) {
-        await Voice.stop()
-        setModalVisible(!modalVisible)
-      } else {
-        await Voice.start("en-US")
-        setIsRecording(true)
-      }
+      await Voice.start("en-US")
+      setIsRecording(true)
     } catch (e) {
       console.error(e)
-      Alert.alert(
-        "Error",
-        "There was an issue starting the speech recognition."
-      )
     }
-
-    // // try {
-    // //   await Voice.start("en-US")
+    // // if (isRecording) {
+    // //   Voice.stop()
+    // //   setModalVisible(!modalVisible)
+    // // } else {
+    // //   Voice.start("en-US")
     // //   setIsRecording(true)
-    // // } catch (e) {
-    // //   console.error(e)
     // // }
-    // if (isRecording) {
-    //   Voice.stop()
-    //   setModalVisible(!modalVisible)
-    // } else {
-    //   Voice.start("en-US")
-    //   setIsRecording(true)
-    // }
   }
 
-  const stopRecognition = () => {
-    // try {
-    //   await Voice.stop()
-    //   setIsRecording(false)
+  const stopRecognition = async () => {
+    try {
+      await Voice.stop()
+      setIsRecording(false)
+    } catch (e) {
+      console.error(e)
+    }
+    // For testing
+    // let newNote =
+    //   "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
 
-    //   // For testing
-    let newNote =
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
+    // setNotes((oldNotes) => [...oldNotes, newNote])
 
-    setNotes((oldNotes) => [...oldNotes, newNote])
-    // } catch (e) {
-    //   console.error(e)
-    // }
-
-    Voice.stop()
-    setIsRecording(false)
+    // Voice.stop()
+    // setIsRecording(false)
   }
 
   const handleMicPress = () => {
